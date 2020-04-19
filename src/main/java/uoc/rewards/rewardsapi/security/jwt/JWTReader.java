@@ -8,7 +8,7 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.tomcat.util.codec.binary.Base64;
 import uoc.rewards.rewardsapi.common.exception.BadJWTException;
-import uoc.rewards.rewardsapi.common.exception.JWTExpiredException;
+import uoc.rewards.rewardsapi.common.exception.ExpiredJWTException;
 
 import java.io.IOException;
 
@@ -47,7 +47,7 @@ public class JWTReader {
         try {
             verifier.verify(jwt);
         } catch (TokenExpiredException e) {
-            throw new JWTExpiredException("JWT is expired");
+            throw new ExpiredJWTException("JWT is expired");
         } catch (InvalidClaimException e) {
             throw new BadJWTException(JWT_INVALID);
         } catch (Exception e) {

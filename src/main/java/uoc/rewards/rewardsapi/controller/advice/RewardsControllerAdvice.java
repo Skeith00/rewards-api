@@ -30,7 +30,7 @@ public class RewardsControllerAdvice {
     }
 
     @ExceptionHandler(BadRequestException.class)
-    protected ResponseEntity<Map<String, Object>> handleBadRequest(BadFormatException e) {
+    protected ResponseEntity<Map<String, Object>> handleBadRequest(BadRequestException e) {
         return handle(HttpStatus.BAD_REQUEST, e.getMessage());
     }
 
