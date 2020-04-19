@@ -1,0 +1,40 @@
+plugins {
+	id 'org.springframework.boot' version '2.2.6.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+	id 'java'
+}
+
+group = 'uoc.rewards'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '13'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	// Exclude the tomcat-jdbc since it's used as default for connection pooling
+	// This can also be achieved by setting the spring.datasource.type to HikariCP
+	// datasource see application.properties below
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'com.auth0:java-jwt:3.10.2'
+	implementation "org.postgresql:postgresql:42.2.12"
+	implementation "org.bouncycastle:bcprov-jdk15on:1.65"
+
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+}
+
+test {
+	useJUnitPlatform()
+}

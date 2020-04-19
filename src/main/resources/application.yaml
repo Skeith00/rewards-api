@@ -1,0 +1,31 @@
+application:
+
+  resource:
+    database:
+      url: jdbc:postgresql://localhost/rewards
+      username: sergi
+      password: 1234
+
+  properties:
+    jwt:
+      privatekey:
+      publickey:
+      issuer: rewards-uoc
+
+spring:
+  jpa:
+    open-in-view: true
+    # Skip generating the schema for the database
+    generate-ddl: false
+    hibernate:
+      # Validate the database schema before using it
+      ddl-auto: validate
+
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: debug
+        type:
+          descriptor:
+            sql: trace
