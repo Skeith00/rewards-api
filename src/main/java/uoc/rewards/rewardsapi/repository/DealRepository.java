@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import uoc.rewards.rewardsapi.model.entity.Deal;
 import uoc.rewards.rewardsapi.model.entity.Organisation;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -15,4 +16,7 @@ public interface DealRepository extends JpaRepository<Deal, Integer> {
 
     @Query("SELECT d FROM Deal d WHERE d.id = :id AND d.organisation = :org")
     Optional<Deal> findByIdAndOrganisation(@Param("id") Integer id, @Param("org") Organisation org);
+
+    @Query("SELECT d FROM Deal d WHERE  d.organisation = :org")
+    List<Deal> findByOrganisation(@Param("org") Organisation org);
 }

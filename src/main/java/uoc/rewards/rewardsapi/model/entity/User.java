@@ -23,12 +23,10 @@ public class User extends IdentifiableEntity {
     @JoinColumn(name="org_id", nullable = false)
     private Organisation organisation;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "user_id")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<HistoricIncome> historicIncomes = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "user_id")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<HistoricOutcome> historicOutcomes = new ArrayList<>();
 
     public User() {

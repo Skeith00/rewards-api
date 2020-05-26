@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import uoc.rewards.rewardsapi.common.exception.*;
+import uoc.rewards.rewardsapi.util.MessageUtils;
 
 import java.util.Date;
 import java.util.LinkedHashMap;
@@ -17,16 +18,7 @@ import java.util.Map;
 public class RewardsControllerAdvice {
 
     private ResponseEntity<Map<String, Object>> handle(HttpStatus status, String message) {
-        return ResponseEntity.status(status).body(getErrorAttributes(status, message));
-    }
-
-    private Map<String, Object> getErrorAttributes(HttpStatus status, String message) {
-        Map<String, Object> attributes = new LinkedHashMap<>();
-        attributes.put("timestamp", new Date());
-        attributes.put("error", status.getReasonPhrase());
-        attributes.put("status", status.value());
-        attributes.put("message", message);
-        return attributes;
+        return ResponseEntity.status(status).body(MessageUtils.getErrorAttributes(status, message));
     }
 
     @ExceptionHandler(BadRequestException.class)

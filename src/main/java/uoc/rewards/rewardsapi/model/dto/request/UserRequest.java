@@ -1,10 +1,7 @@
 package uoc.rewards.rewardsapi.model.dto.request;
 
-import javax.validation.constraints.NotEmpty;
+public class UserRequest {
 
-public class UserCreationRequest {
-
-    @NotEmpty
     private String email;
     private String name;
     private String lastName;

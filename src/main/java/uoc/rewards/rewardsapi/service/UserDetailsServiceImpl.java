@@ -25,7 +25,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<Organisation> organisation = organisationRepository.findByEmail(username);
         if (!organisation.isPresent()) {
-            throw new UsernameNotFoundException(username);
+            throw new UsernameNotFoundException("Wrong login/password");
         }
         return new User(organisation.get().getEmail(), organisation.get().getPassword(), emptyList());
     }

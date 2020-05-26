@@ -7,10 +7,21 @@ import java.util.Date;
 @Table(name="historic_outcome")
 public class HistoricOutcome extends Historic {
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User user;
+
     private Date date;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Deal deal;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     @Override
     public Date getDate() {

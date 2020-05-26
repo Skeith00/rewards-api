@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import uoc.rewards.rewardsapi.model.entity.Organisation;
 import uoc.rewards.rewardsapi.model.entity.User;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -18,7 +19,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     Optional<User> findByEmail(@Param("email") String email);
 
     @Query("SELECT u FROM User u WHERE u.organisation = :org")
-    Set<User> findByOrg(@Param("org") Organisation org);
+    List<User> findByOrg(@Param("org") Organisation org);
 
     @Query("SELECT u FROM User u WHERE u.id = :id AND u.organisation = :org")
     Optional<User> findByIdAndOrganisation(@Param("id") Integer id, @Param("org") Organisation org);

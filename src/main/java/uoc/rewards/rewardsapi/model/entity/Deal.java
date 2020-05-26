@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name="buyer")
+@Table
 public class Deal extends IdentifiableEntity {
 
     private String name;
@@ -15,7 +15,7 @@ public class Deal extends IdentifiableEntity {
     private Date expiryDate;
 
     @ManyToOne
-    @JoinColumn(name="deals", nullable = false)
+    @JoinColumn(name="org_id", nullable = false)
     private Organisation organisation;
 
     public String getName() {

@@ -23,17 +23,20 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     private AuthenticationManager authenticationManager;
     private JWTWritter jwtWritter;
+    private ObjectMapper objectMapper;
 
-    public JWTAuthenticationFilter(AuthenticationManager authenticationManager, JWTWritter jwtWritter) {
+    public JWTAuthenticationFilter(AuthenticationManager authenticationManager, JWTWritter jwtWritter, ObjectMapper objectMapper) {
         this.authenticationManager = authenticationManager;
         this.jwtWritter = jwtWritter;
+        this.objectMapper = objectMapper;
+        this.setAuthenticationFailureHandler(new UnauthorizedHandler());
     }
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest req,
                                                 HttpServletResponse res) throws AuthenticationException {
         try {
-            OrganistationLogin creds = new ObjectMapper()
+            OrganistationLogin creds = objectMapper
                     .readValue(req.getInputStream(), OrganistationLogin.class);
 
             return authenticationManager.authenticate(
@@ -53,7 +56,9 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                                             FilterChain chain,
                                             Authentication auth) {
 
+        //res.setHeader("Access-Control-Allow-Headers", "Authorization");
+        res.setHeader("Access-Control-Expose-Headers", "Authorization");
         String token = jwtWritter.generateToken(((User) auth.getPrincipal()).getUsername());
-        res.addHeader(HEADER_STRING, TOKEN_PREFIX + token);
+        res.setHeader(HEADER_STRING, TOKEN_PREFIX + token);
     }
 }

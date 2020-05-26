@@ -1,21 +1,15 @@
 package uoc.rewards.rewardsapi.service;
 
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import uoc.rewards.rewardsapi.common.exception.BadRequestException;
 import uoc.rewards.rewardsapi.common.exception.NotFoundException;
 import uoc.rewards.rewardsapi.model.dto.request.AddDealRequest;
-import uoc.rewards.rewardsapi.model.dto.request.UserCreationRequest;
-import uoc.rewards.rewardsapi.model.dto.response.UserResponse;
+import uoc.rewards.rewardsapi.model.dto.response.DealResponse;
 import uoc.rewards.rewardsapi.model.entity.Deal;
 import uoc.rewards.rewardsapi.model.entity.Organisation;
-import uoc.rewards.rewardsapi.model.entity.User;
 import uoc.rewards.rewardsapi.repository.DealRepository;
 import uoc.rewards.rewardsapi.repository.OrganisationRepository;
-import uoc.rewards.rewardsapi.repository.UserRepository;
 
-import java.util.Optional;
-import java.util.Set;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -29,10 +23,9 @@ public class DealService {
         this.organisationRepository = organisationRepository;
     }
 
-    @Transactional
-    public void createDeal(AddDealRequest addDealRequest, Integer orgId) {
-        Organisation organisation = organisationRepository.findById(orgId)
-                .orElseThrow(() -> new NotFoundException(String.format("Organisation with id %d not found", orgId)));
+    public void createDeal(AddDealRequest addDealRequest, String orgEmail) {
+        Organisation organisation = organisationRepository.findByEmail(orgEmail)
+                .orElseThrow(() -> new NotFoundException(String.format("Organisation with email %d not found", orgEmail)));
 
         Deal newDeal = new Deal();
         newDeal.setName(addDealRequest.getName());
@@ -41,5 +34,20 @@ public class DealService {
         newDeal.setPoints(addDealRequest.getPoints());
         newDeal.setOrganisation(organisation);
         dealRepository.save(newDeal);
+    }
+
+
+    public List<DealResponse> getDealsByOrg(String orgEmail) {
+        Organisation organisation = organisationRepository.findByEmail(orgEmail)
+                .orElseThrow(() -> new NotFoundException(String.format("Organisation with email %d not found", orgEmail)));
+        List<Deal> deals = dealRepository.findByOrganisation(organisation);
+        return deals.stream()
+                .map(deal -> new DealResponse(
+                        deal.getId(),
+                        deal.getName(),
+                        deal.getDescription(),
+                        deal.getPoints(),
+                        deal.getExpiryDate()))
+                .collect(Collectors.toList());
     }
 }

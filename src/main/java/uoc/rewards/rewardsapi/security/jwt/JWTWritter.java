@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class JWTWritter {
 
-    private static final long EXPIRATION_TIME = TimeUnit.MINUTES.toMillis(15);
+    private static final long EXPIRATION_TIME = TimeUnit.MINUTES.toMillis(1);
 
     private JWTProperties jwtProperties;
     private Algorithm algorithm;
