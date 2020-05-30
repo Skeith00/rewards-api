@@ -28,17 +28,14 @@ public class JWTPemUtils {
         }
     }
 
-
-    private static byte[] parsePEMFile(File pemFile) throws IOException {
-        if (!pemFile.isFile() || !pemFile.exists()) {
-            throw new FileNotFoundException(String.format("The file '%s' doesn't exist.", pemFile.getAbsolutePath()));
-        }
-        PemReader reader = new PemReader(new FileReader(pemFile));
+    private static byte[] parsePEMBytes(byte[] keyBytes) throws IOException {
+        PemReader reader = new PemReader(new StringReader(new String(keyBytes)));
         PemObject pemObject = reader.readPemObject();
         byte[] content = pemObject.getContent();
         reader.close();
         return content;
     }
+
 
     private static PublicKey getPublicKey(byte[] keyBytes) {
         try {
@@ -58,13 +55,14 @@ public class JWTPemUtils {
         }
     }
 
-    public static PublicKey readPublicKeyFromFile(String filepath) throws IOException {
-        byte[] bytes = JWTPemUtils.parsePEMFile(new File(filepath));
-        return JWTPemUtils.getPublicKey(bytes);
+    public static PublicKey readPublicKeyFromFile(byte[] bytes) throws IOException {
+        byte[] parsedBytes = JWTPemUtils.parsePEMBytes(bytes);
+        return JWTPemUtils.getPublicKey(parsedBytes);
     }
 
-    public static PrivateKey readPrivateKeyFromFile(String filepath) throws IOException {
-        byte[] bytes = JWTPemUtils.parsePEMFile(new File(filepath));
-        return JWTPemUtils.getPrivateKey(bytes);
+    public static PrivateKey readPrivateKeyFromFile(byte[] bytes) throws IOException {
+        byte[] parsedBytes = JWTPemUtils.parsePEMBytes(bytes);
+        return JWTPemUtils.getPrivateKey(parsedBytes);
     }
+
 }

@@ -21,10 +21,9 @@ public class JWTConfig {
 
     @Bean
     public Algorithm algorithm() throws IOException {
-
         return Algorithm.RSA256(
-                (RSAPublicKey) JWTPemUtils.readPublicKeyFromFile(ClassLoader.getSystemResource("certificates/public.pem").getPath()),
-                (RSAPrivateKey) JWTPemUtils.readPrivateKeyFromFile(ClassLoader.getSystemResource("certificates/privatepkcs8.pem").getPath())
+            (RSAPublicKey) JWTPemUtils.readPublicKeyFromFile(getClass().getClassLoader().getResourceAsStream("certificates/public.pem").readAllBytes()),
+            (RSAPrivateKey) JWTPemUtils.readPrivateKeyFromFile(getClass().getClassLoader().getResourceAsStream("certificates/privatepkcs8.pem").readAllBytes())
         );
     }
 
