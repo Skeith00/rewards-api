@@ -25,7 +25,7 @@ public class OrgController {
     }
 
     @GetMapping("/deal")
-    public ResponseEntity<List<DealResponse>> getUsers(@RequestHeader("organisation") String orgEmail) {
+    public ResponseEntity<List<DealResponse>> getDeals(@RequestHeader("organisation") String orgEmail) {
         List<DealResponse> deals = dealService.getDealsByOrg(orgEmail);
         return ResponseEntity.ok().body(deals);
     }

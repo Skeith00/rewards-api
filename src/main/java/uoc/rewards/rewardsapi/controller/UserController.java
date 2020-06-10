@@ -28,7 +28,7 @@ public class UserController {
     }
 
     @PostMapping("/edit/{userId}")
-    public ResponseEntity addUser(@RequestHeader(value = "organisation") String orgEmail,
+    public ResponseEntity editUser(@RequestHeader(value = "organisation") String orgEmail,
                                   @PathVariable int userId,
                                   @RequestBody UserRequest userRequest) {
         userService.editUser(userId, userRequest, orgEmail);
