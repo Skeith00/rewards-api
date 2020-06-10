@@ -12,8 +12,6 @@ import java.util.concurrent.TimeUnit;
  */
 public class JWTWritter {
 
-    private static final long EXPIRATION_TIME = TimeUnit.MINUTES.toMillis(1);
-
     private JWTProperties jwtProperties;
     private Algorithm algorithm;
 
@@ -29,7 +27,7 @@ public class JWTWritter {
                     .withSubject(subject)
                     .withIssuer(jwtProperties.getIssuer())
                     .withIssuedAt(new Date())
-                    .withExpiresAt(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
+                    .withExpiresAt(new Date(System.currentTimeMillis() + jwtProperties.getExpirationTime()))
                     .sign(algorithm);
 
         } catch (Exception e) {

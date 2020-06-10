@@ -19,9 +19,6 @@ repositories {
 }
 
 dependencies {
-	// Exclude the tomcat-jdbc since it's used as default for connection pooling
-	// This can also be achieved by setting the spring.datasource.type to HikariCP
-	// datasource see application.properties below
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter'
 	implementation 'org.springframework.boot:spring-boot-starter-web'

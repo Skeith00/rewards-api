@@ -11,10 +11,8 @@ application:
 
   properties:
     jwt:
-      privatekey:
-      publickey:
       issuer: rewards-uoc
-
+      expirationTime: 10
 spring:
   jpa:
     open-in-view: true
