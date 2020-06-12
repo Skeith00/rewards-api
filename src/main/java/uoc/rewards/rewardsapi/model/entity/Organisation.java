@@ -19,7 +19,7 @@ public class Organisation extends IdentifiableEntity {
     private Set<User> users;
 
     @OneToMany(mappedBy = "organisation")
-    private List<Deal> deals;
+    private Set<Deal> deals;
 
     public String getName() {
         return name;
@@ -61,11 +61,11 @@ public class Organisation extends IdentifiableEntity {
         this.users = users;
     }
 
-    public List<Deal> getDeals() {
+    public Set<Deal> getDeals() {
         return deals;
     }
 
-    public void setDeals(List<Deal> deals) {
+    public void setDeals(Set<Deal> deals) {
         this.deals = deals;
     }
 }
