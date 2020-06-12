@@ -29,9 +29,6 @@ public class User extends IdentifiableEntity {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<HistoricOutcome> historicOutcomes = new ArrayList<>();
 
-    public User() {
-    }
-
     public User(String email, String name, String lastName, String phone) {
         this.email = email;
         this.name = name;

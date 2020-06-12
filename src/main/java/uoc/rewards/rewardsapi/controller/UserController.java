@@ -64,8 +64,7 @@ public class UserController {
     }
 
     @GetMapping(value = "/historic/{userId}")
-    public ResponseEntity<List<HistoricResponse>> getHistoricUser(@RequestHeader("organisation") String orgEmail,
-                                      @PathVariable int userId) {
+    public ResponseEntity<List<HistoricResponse>> getHistoricUser(@RequestHeader("organisation") String orgEmail, @PathVariable int userId) {
         List<HistoricResponse> historic = userService.getHistoricByUserIdAndOrg(userId, orgEmail);
         return ResponseEntity.ok().body(historic);
     }

@@ -3,6 +3,7 @@ package uoc.rewards.rewardsapi.model.entity;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -17,8 +18,8 @@ public class Organisation extends IdentifiableEntity {
     @OneToMany(mappedBy = "organisation")
     private Set<User> users;
 
-    @OneToMany(mappedBy = "id")
-    private Set<Deal> deals;
+    @OneToMany(mappedBy = "organisation")
+    private List<Deal> deals;
 
     public String getName() {
         return name;
@@ -60,11 +61,11 @@ public class Organisation extends IdentifiableEntity {
         this.users = users;
     }
 
-    public Set<Deal> getDeals() {
+    public List<Deal> getDeals() {
         return deals;
     }
 
-    public void setDeals(Set<Deal> deals) {
+    public void setDeals(List<Deal> deals) {
         this.deals = deals;
     }
 }

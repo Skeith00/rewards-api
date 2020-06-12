@@ -12,7 +12,7 @@ application:
   properties:
     jwt:
       issuer: rewards-uoc
-      expirationTime: 10
+      expirationTime: 60
 spring:
   jpa:
     open-in-view: true

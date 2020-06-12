@@ -120,12 +120,12 @@ public class UserService {
         User user = userRepository.findByIdAndOrganisation(userId, org)
                 .orElseThrow(() -> new NotFoundException(String.format("User with id %d not found", userId)));
 
-        Set<Deal> deals = org.getDeals();
+        List<Deal> deals = org.getDeals();
         List<SingleUserResponse.AvailableDeal> filteredDeals = deals.stream()
                 .filter(deal -> (deal.getPoints() <= user.getPoints() && deal.getExpiryDate().before(new Date())))
                 .map(deal-> new SingleUserResponse.AvailableDeal(deal.getId(), deal.getName()))
                 .collect(Collectors.toList());
-        SingleUserResponse userResponse = new SingleUserResponse(
+        return new SingleUserResponse(
                 user.getId(),
                 user.getEmail(),
                 user.getName(),
@@ -134,8 +134,6 @@ public class UserService {
                 user.getPoints(),
                 filteredDeals
         );
-
-        return userResponse;
     }
 
     @Transactional
